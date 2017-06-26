@@ -42,12 +42,26 @@ import numpy as np
 import detect_face
 import cv2
 
+
+def restore_mtcnn(sess):
+
+    pnet_fun = lambda img : sess.run(('pnet/conv4-2/BiasAdd:0', 'pnet/prob1:0'), feed_dict={'pnet/input:0':img})
+    rnet_fun = lambda img : sess.run(('rnet/conv5-2/conv5-2:0', 'rnet/prob1:0'), feed_dict={'rnet/input:0':img})
+    onet_fun = lambda img : sess.run(('onet/conv6-2/conv6-2:0', 'onet/conv6-3/conv6-3:0', 'onet/prob1:0'), feed_dict={'onet/input:0':img})
+
+    return pnet_fun, rnet_fun, onet_fun
+ 
+
 def main(args):
     
     sess = tf.Session()
-    pnet, rnet, onet = detect_face.create_mtcnn(sess, None)
     
-    saver=tf.train.Saver()
+    saver=tf.train.import_meta_graph("/tmp/model.ckpt.meta")
+    save_path=saver.restore(sess,"/tmp/model.ckpt");
+
+    pnet, rnet, onet = restore_mtcnn(sess)
+
+
     minsize = 40 # minimum size of face
     threshold = [ 0.6, 0.7, 0.9 ]  # three steps's threshold
     factor = 0.709 # scale factor
@@ -80,9 +94,7 @@ def main(args):
                             
     print('Total %d face(s) detected, saved in %s' % (nrof_faces,output_filename))
 
-    save_path=saver.save(sess,"./models/save/mtcnn");
 
-    print("Model saved in file: %s" % save_path)
             
 
 def parse_arguments(argv):

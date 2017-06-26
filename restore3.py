@@ -41,13 +41,31 @@ import tensorflow as tf
 import numpy as np
 import detect_face
 import cv2
+import model_load as ld
+
+
+def restore_mtcnn(sess):
+
+    pnet_fun = lambda img : sess.run(('prefix/pnet/conv4-2/BiasAdd:0', 'prefix/pnet/prob1:0'), feed_dict={'prefix/pnet/input:0':img})
+    rnet_fun = lambda img : sess.run(('prefix/rnet/conv5-2/conv5-2:0', 'prefix/rnet/prob1:0'), feed_dict={'prefix/rnet/input:0':img})
+    onet_fun = lambda img : sess.run(('prefix/onet/conv6-2/conv6-2:0', 'prefix/onet/conv6-3/conv6-3:0', 'prefix/onet/prob1:0'), feed_dict={'prefix/onet/input:0':img})
+
+    return pnet_fun, rnet_fun, onet_fun
+ 
 
 def main(args):
     
-    sess = tf.Session()
-    pnet, rnet, onet = detect_face.create_mtcnn(sess, None)
+
+    graph=ld.load_graph(args.frozen_model_filename)
     
-    saver=tf.train.Saver()
+    sess = tf.Session(graph=graph)
+
+    for op in graph.get_operations():
+        print(op.name)
+
+    pnet, rnet, onet = restore_mtcnn(sess)
+
+
     minsize = 40 # minimum size of face
     threshold = [ 0.6, 0.7, 0.9 ]  # three steps's threshold
     factor = 0.709 # scale factor
@@ -80,15 +98,14 @@ def main(args):
                             
     print('Total %d face(s) detected, saved in %s' % (nrof_faces,output_filename))
 
-    save_path=saver.save(sess,"./models/save/mtcnn");
 
-    print("Model saved in file: %s" % save_path)
             
 
 def parse_arguments(argv):
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', type=str, help='image to be detected for faces.',default='./test.jpg')
     parser.add_argument('--output', type=str, help='new image with boxed faces',default='new.jpg')
+    parser.add_argument("--frozen_model_filename", default="./models/save/frozen_model.pb", type=str, help="Frozen model file to import")
     return parser.parse_args(argv)
 
 if __name__ == '__main__':
