@@ -67,10 +67,8 @@ def main(args):
     pnet, rnet, onet = restore_mtcnn(sess)
     
     saver=tf.train.Saver()
-    save_path=saver.restore(sess,"/tmp/model.ckpt");
+    save_path=saver.restore(sess,"./models/save/mtcnn");
 
-
-    graph=tf.train.export_meta_graph("/tmp/graph.def");
 
     minsize = 40 # minimum size of face
     threshold = [ 0.6, 0.7, 0.9 ]  # three steps's threshold

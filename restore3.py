@@ -46,9 +46,9 @@ import model_load as ld
 
 def restore_mtcnn(sess):
 
-    pnet_fun = lambda img : sess.run(('prefix/pnet/conv4-2/BiasAdd:0', 'prefix/pnet/prob1:0'), feed_dict={'prefix/pnet/input:0':img})
-    rnet_fun = lambda img : sess.run(('prefix/rnet/conv5-2/conv5-2:0', 'prefix/rnet/prob1:0'), feed_dict={'prefix/rnet/input:0':img})
-    onet_fun = lambda img : sess.run(('prefix/onet/conv6-2/conv6-2:0', 'prefix/onet/conv6-3/conv6-3:0', 'prefix/onet/prob1:0'), feed_dict={'prefix/onet/input:0':img})
+    pnet_fun = lambda img : sess.run(('pnet/conv4-2/BiasAdd:0', 'pnet/prob1:0'), feed_dict={'pnet/input:0':img})
+    rnet_fun = lambda img : sess.run(('rnet/conv5-2/conv5-2:0', 'rnet/prob1:0'), feed_dict={'rnet/input:0':img})
+    onet_fun = lambda img : sess.run(('onet/conv6-2/conv6-2:0', 'onet/conv6-3/conv6-3:0', 'onet/prob1:0'), feed_dict={'onet/input:0':img})
 
     return pnet_fun, rnet_fun, onet_fun
  

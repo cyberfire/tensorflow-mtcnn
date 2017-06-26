@@ -56,8 +56,8 @@ def main(args):
     
     sess = tf.Session()
     
-    saver=tf.train.import_meta_graph("/tmp/model.ckpt.meta")
-    save_path=saver.restore(sess,"/tmp/model.ckpt");
+    saver=tf.train.import_meta_graph("./models/save/mtcnn.meta")
+    save_path=saver.restore(sess,"./models/save/mtcnn");
 
     pnet, rnet, onet = restore_mtcnn(sess)
 

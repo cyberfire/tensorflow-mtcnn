@@ -47,11 +47,14 @@ def main(args):
     sess = tf.Session()
     pnet, rnet, onet = detect_face.create_mtcnn(sess, None)
     
+
     saver=tf.train.Saver()
+
     minsize = 40 # minimum size of face
     threshold = [ 0.6, 0.7, 0.9 ]  # three steps's threshold
     factor = 0.709 # scale factor
 
+    save_path=saver.save(sess,"/tmp/chk");
     
     filename =args.input 
     output_filename =args.output
@@ -80,7 +83,6 @@ def main(args):
                             
     print('Total %d face(s) detected, saved in %s' % (nrof_faces,output_filename))
 
-    save_path=saver.save(sess,"./models/save/mtcnn");
 
     print("Model saved in file: %s" % save_path)
             

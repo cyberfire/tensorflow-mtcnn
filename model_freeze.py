@@ -9,6 +9,8 @@ def freeze_graph(model_folder):
     # We retrieve our checkpoint fullpath
     checkpoint = tf.train.get_checkpoint_state(model_folder)
     input_checkpoint = checkpoint.model_checkpoint_path
+
+    print("%s"%input_checkpoint)
     
     # We precise the file fullname of our freezed graph
     absolute_model_folder = "/".join(input_checkpoint.split('/')[:-1])
@@ -28,6 +30,9 @@ def freeze_graph(model_folder):
     # We retrieve the protobuf graph definition
     graph = tf.get_default_graph()
     input_graph_def = graph.as_graph_def()
+
+    tf.train.write_graph(input_graph_def,"./models/save","graph.pb");
+
 
     # We start a session and restore the graph weights
     with tf.Session() as sess:

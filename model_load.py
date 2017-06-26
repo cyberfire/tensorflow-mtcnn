@@ -14,7 +14,7 @@ def load_graph(frozen_graph_filename):
             graph_def, 
             input_map=None, 
             return_elements=None, 
-            name="prefix", 
+            name="", 
             op_dict=None, 
             producer_op_list=None
         )
