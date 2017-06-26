@@ -54,7 +54,10 @@ def main(args):
     threshold = [ 0.6, 0.7, 0.9 ]  # three steps's threshold
     factor = 0.709 # scale factor
 
-    save_path=saver.save(sess,"/tmp/chk");
+    save_path=saver.save(sess,"./models/save");
+
+    tf.train.write_graph(sess.graph.as_graph_def(),"./models/save","graph.pb");
+
     
     filename =args.input 
     output_filename =args.output
