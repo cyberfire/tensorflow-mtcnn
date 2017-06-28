@@ -19,14 +19,15 @@ This is an example of how to tensorflow C API
 3  make
    two demoes will be created: "test" to check single photo while "camera" to do live face detection.
 
+ 
+4 run: 
    arguments for test:
 
    test [ -i input_image ] [ -o output_image]  [ -m model_fname] [-s]
 
          -s     save the detected face into .jpg file  
 
-4 run: 
-
+   
 
 
 
