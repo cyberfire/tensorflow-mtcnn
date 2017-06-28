@@ -7,9 +7,13 @@ Based on davidsandberg's facenet project:
 
 Python version is in the root directory
 
-C++ version  is under directory  cpp/tf_embedded. 
-Please checkout README.md in that directory for C++ usage.
+There are two version for C++.
 
+One is to be build inside tensorflow code repository, so that it needs to be copied to the directory tensorflow/example.
+please check cpp/tf_embedded/README.md for details.
+
+The other is the standalone one, just needs libtensorflow.so and c_api.h to build and run.
+Please check cpp/standalone/README.md for more details
 
 ## Python Run
 1. install tensorflow first, please refers to https://www.tensorflow.org/install
