@@ -1,11 +1,9 @@
 # tensorflow-mtcnn
-Inference only for MTCNN face detector on Tensorflow. 
 
-Inference only for MTCNN face detector on Tensorflow.
+MTCNN is one of the best face detection algorithms.
+Here is inference only for MTCNN face detector on Tensorflow, which is based on davidsandberg's facenet project, include the python version and C++ version.
 
-Based on davidsandberg's facenet project:
-
-Python version is in the root directory
+## C++
 
 There are two version for C++.
 
