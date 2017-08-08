@@ -18,6 +18,10 @@ Please check cpp/standalone/README.md for more details
 2. install python packages: opencv, numpy
 3. python ./facedetect_mtcnn.py --input input.jpg --output  new.jpg
 
+## Build tensorflow on arm64 board
+
+Please check out the guide [how to build tensorflow on firefly](https://cyberfire.github.io/tensorflow/rk3399/howto%20build%20tensorflow%20on%20firefly.md)
+
 ## Credit
 
 ### MTCNN algorithm
